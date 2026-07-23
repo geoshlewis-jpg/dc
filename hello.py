@@ -32,8 +32,8 @@ class Item:
         for item in items:
             cls(
                 name=item['name'].strip(),
-                price=float(item['price']),
-                quantity=int(item['quantity'])
+                price=float(item['price'].strip() or 0),
+                quantity=int(item['quantity'].strip() or 0)
             )
 
         return cls.all
