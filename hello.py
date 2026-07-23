@@ -1,4 +1,5 @@
 import csv
+import os
 
 class Item:
     pay_rate = 0.8 # The pay rate after 20% discount
@@ -23,7 +24,8 @@ class Item:
     @classmethod
     def instantiate_from_csv(cls):
         cls.all.clear()
-        with open('items.csv', 'r', newline='') as f:
+        file_path = os.path.join(os.path.dirname(__file__), 'items.csv')
+        with open(file_path, 'r', newline='') as f:
             reader = csv.DictReader(f)
             items = list(reader)
 
@@ -36,6 +38,14 @@ class Item:
 
         return cls.all
     
+    @staticmethod
+    def is_integer(num):
+        # We will count decimals that are point zero
+        # For i.e:5.0, 10.0
+        if isinstance(num, (int, float)):
+            return float(num).is_integer()
+        return False
+
     def __repr__(self):
         return f"Item('{self.name}', {self.price}, {self.quantity})"
 
